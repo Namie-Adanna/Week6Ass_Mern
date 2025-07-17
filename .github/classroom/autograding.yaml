@@ -1,86 +1,86 @@
 tests:
-  - name: Check if server.js exists
-    run: test -f server/server.js
+  - name: Check if jest.config.js exists
+    run: test -f jest.config.js
     input: ""
     output: ""
     comparison: included
     timeout: 10
     points: 5
 
-  - name: Check if MongoDB connection is configured
-    run: grep -q "mongoose.connect" server/server.js
+  - name: Check if package.json has test scripts
+    run: grep -q "\"test\"" package.json
     input: ""
     output: ""
     comparison: included
     timeout: 10
     points: 5
 
-  - name: Check for Post model
-    run: test -f server/models/Post.js
+  - name: Check for server-side test files
+    run: test -d server/tests
     input: ""
     output: ""
     comparison: included
     timeout: 10
     points: 10
 
-  - name: Check for API routes
-    run: grep -q "app.use.*\/api\/" server/server.js
+  - name: Check for client-side test files
+    run: test -d client/src/tests
     input: ""
     output: ""
     comparison: included
     timeout: 10
     points: 10
 
-  - name: Check if client App.jsx exists
-    run: test -f client/src/App.jsx
-    input: ""
-    output: ""
-    comparison: included
-    timeout: 10
-    points: 5
-
-  - name: Check for API service in client
-    run: test -f client/src/services/api.js
+  - name: Check for Jest dependencies
+    run: grep -q "jest" package.json
     input: ""
     output: ""
     comparison: included
     timeout: 10
     points: 10
 
-  - name: Check for React Router usage
-    run: grep -q "react-router-dom" client/package.json
+  - name: Check for React Testing Library
+    run: grep -q "testing-library/react" client/package.json || grep -q "testing-library/react" package.json
     input: ""
     output: ""
     comparison: included
     timeout: 10
     points: 10
 
-  - name: Check for React hooks usage
-    run: grep -q "useState\|useEffect\|useContext" client/src/ -r
+  - name: Check for Supertest
+    run: grep -q "supertest" server/package.json || grep -q "supertest" package.json
     input: ""
     output: ""
     comparison: included
     timeout: 10
     points: 10
 
-  - name: Check for form validation
-    run: grep -q "validation\|validate\|Joi\|yup\|validator" server/ -r
+  - name: Check for unit tests
+    run: find . -name "*.test.js" -o -name "*.test.jsx" | grep -q "unit"
     input: ""
     output: ""
     comparison: included
     timeout: 10
     points: 10
 
-  - name: Check for authentication implementation
-    run: grep -q "auth\|login\|register\|jwt\|token\|password" server/ -r
+  - name: Check for integration tests
+    run: find . -name "*.test.js" -o -name "*.test.jsx" | grep -q "integration"
     input: ""
     output: ""
     comparison: included
     timeout: 10
-    points: 15
+    points: 10
 
-  - name: Check for error handling
-    run: grep -q "try.*catch\|error.*handling\|catch.*error" server/ -r
+  - name: Check for end-to-end test setup
+    run: test -d cypress || test -d playwright || grep -q "cypress\|playwright" package.json
+    input: ""
+    output: ""
+    comparison: included
+    timeout: 10
+    points: 10
+
+  - name: Check for error handling tests
+    run: grep -q "error\|catch\|try" server/tests -r || grep -q "error\|catch\|try" client/src/tests -r
     input: ""
     output: ""
     comparison: included
