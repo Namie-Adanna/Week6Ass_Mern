@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
         <div className="container">
           <div className="header-content">
             <Link to="/" className="logo">
-              MERN Blog
+              Naly Blog
             </Link>
             <nav className="nav">
               <Link to="/">Home</Link>
